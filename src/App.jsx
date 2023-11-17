@@ -1,5 +1,17 @@
+import {useState, useCllback} from 'react'
 
 function App() {
+
+  const [length, setLength] = useState(8)
+  const [numberAllowed, serNumberAllowed] = useState(false)
+  const [charAllowed, setCharAllowed] = useState(false)
+  const [password, setPassword] = useState("")
+
+  const passwordGenerator = () => {
+    
+  }
+
+
 
   return (
     <>
