@@ -7,6 +7,8 @@ function App() {
   const [charAllowed, setCharAllowed] = useState(false)
   const [password, setPassword] = useState("")
 
+  // function to change randome password
+
   return (
     <>
       <h1 className='text-4xl text-center text-white'>Password Generator</h1>
