@@ -7,8 +7,6 @@ function App() {
   const [charAllowed, setCharAllowed] = useState(false)
   const [password, setPassword] = useState("")
 
-  // function to change random password
-
 
   return (
     <>
