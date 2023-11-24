@@ -1,10 +1,13 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 function App() {
   const [length, setLength] = useState(8);
   const [numberAllowed, setNumberAllowed] = useState(false);
   const [charAllowed, setCharAllowed] = useState(false);
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(""); // they help to make
+
+  //useRef hook
+  const passwordRef = useRef(null);
 
   const passwordGenerator = useCallback(() => {
     let pass = "";
@@ -19,15 +22,23 @@ function App() {
     }
 
     setPassword(pass);
-  }, [length, numberAllowed, charAllowed, setPassword]);
+  }, [length, numberAllowed, charAllowed, setPassword]); // these dependencies are responsible for optimization
+
+  //purposeof setpassword in dependencies is that to kept the password also in the memory cache memory
+
+  const copyPasswordToClipboard = useCallback(() => {
+    passwordRef.current?.select()
+    window.navigator.clipboard.writeText(password)
+  }, [password])
 
   useEffect(() => {
     passwordGenerator();
-  }, [length, numberAllowed, charAllowed, passwordGenerator])
+  }, [length, numberAllowed, charAllowed, passwordGenerator]); // these dependencies are responsible to make every changes
 
   return (
     <>
-      <div className="w-full max-w-md mx-auto shadow-md rounded-lg px-4 py-3 my-8 text-orange-500 bg-gray-800">
+      <div className="w-full h-screen flex items-center justify-center border border-red-200">
+        <div className="w-full max-w-md mx-auto shadow-md rounded-lg px-8 py-8 my-8 text-orange-500 bg-gray-800">
         <h1 className="text-white text-center my-3">Password generator </h1>
 
         <div className="flex shadow rounded-lg overflow-hidden mb-4">
@@ -37,9 +48,13 @@ function App() {
             className="outline-none w-full py-1 px-3"
             placeholder="password"
             readOnly
+            ref={passwordRef}
           />
 
-          <button className="outline-none bg-blue-800 text-white px-3 py-0.5 shrink-0">
+          <button
+            onClick={copyPasswordToClipboard}
+            className="outline-none bg-blue-800 text-white px-3 py-0.5 shrink-0"
+          >
             Copy
           </button>
         </div>
@@ -78,6 +93,7 @@ function App() {
             <label>Characters</label>
           </div>
         </div>
+      </div>
       </div>
     </>
   );
